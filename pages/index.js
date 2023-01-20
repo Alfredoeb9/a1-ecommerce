@@ -1,11 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
+import { Product, FooterBanner, HeroBanner } from "../components";
+import { client } from "../lib/client";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
+import product from "@/sanity_ecommerce/schemas/product";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ products, bannerData }) {
   return (
     <>
       <Head>
@@ -18,7 +21,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
+        <HeroBanner heroBanner={bannerData.length && bannerData[0]} />
+        <div>
+          <h2 className="products-heading">Best Selling Kicks</h2>
+          {products.map((product) => product.name)}
+        </div>
+
+        <div className="products-container">
+          {products?.map((product) => (
+            <Product key={product.id} product={product} />
+          ))}
+        </div>
+
+        <FooterBanner footerBanner={bannerData && bannerData[0]} />
+        {/* <div className={styles.description}>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.js</code>
@@ -119,8 +135,20 @@ export default function Home() {
               with&nbsp;Vercel.
             </p>
           </a>
-        </div>
+        </div> */}
       </main>
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const query = '*[_type == "product"]';
+  const products = await client.fetch(query);
+
+  const bannerQuery = '*[_type == "banner"]';
+  const bannerData = await client.fetch(bannerQuery);
+
+  return {
+    props: { products, bannerData },
+  };
+};
