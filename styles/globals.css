@@ -211,7 +211,7 @@ span.text-red {
   background-color: #f02d34;
   border-radius: 15px;
   position: relative;
-  height: 400px;
+  height: 465px;
   line-height: 1;
   color: white;
   width: 100%;
@@ -244,11 +244,13 @@ span.text-red {
   position: absolute;
   /* top: -35%;
   left: 8%; */
-  top: -25%;
-  left: 25%;
+  top: -14%;
+  left: 23%;
+  width: 43%;
 }
 .banner-desc .right {
   line-height: 1.4;
+  width: 34%;
 }
 .banner-desc .right h3 {
   font-weight: 800;
@@ -608,6 +610,19 @@ span.text-red {
   margin-top: 10px;
 }
 
+@media screen and (max-width: 1250px) {
+  .footer-banner-container {
+    height: 620px;
+    margin-top: 80px;
+  }
+
+  .footer-banner-image {
+    top: 13%;
+    left: 11%;
+    width: 421px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .hero-banner-container {
     height: 560px;
@@ -623,9 +638,9 @@ span.text-red {
     margin-top: 80px;
   }
   .footer-banner-image {
-    width: 77%;
-    left: 30%;
-    top: 6%;
+    width: 55%;
+    left: 0%;
+    top: 40%;
     height: 56%;
   }
   .banner-desc .left h3 {
