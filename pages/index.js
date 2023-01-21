@@ -11,15 +11,6 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home({ products, bannerData }) {
   return (
     <>
-      <Head>
-        <title>A1 | SNKRS</title>
-        <meta
-          name="description"
-          content="#1 ecommerce shop to buy your shoes"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <main className={styles.main}>
         <HeroBanner heroBanner={bannerData.length && bannerData[0]} />
         <div>
