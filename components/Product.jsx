@@ -16,7 +16,7 @@ function Product({ product: { image, name, slug, price } }) {
             alt={image[0].desc}
           />
           <p className="product-name">{name}</p>
-          <p className="product-price">{price}</p>
+          <p className="product-price">${price}</p>
         </div>
       </Link>
     </div>
