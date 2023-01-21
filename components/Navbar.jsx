@@ -9,7 +9,7 @@ function Navbar() {
   return (
     <div className="navbar-container">
       <p className="logo">
-        <Link href="/">Jordans</Link>
+        <Link href="/">A1 | Kicks</Link>
       </p>
       <button
         type="button"
