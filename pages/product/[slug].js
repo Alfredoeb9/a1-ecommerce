@@ -11,12 +11,20 @@ import {
 } from "react-icons/ai";
 import { Product } from "../../components";
 import { useStateContext } from "../../context/StateContext";
+import toast from "react-hot-toast";
+import getStripe from "@/lib/getStripe";
 
 function ProductDetails({ product, products }) {
   const [index, setIndex] = useState(0);
   const { image, name, details, price } = product;
 
-  const { decreaseQty, increaseQty, qty, onAddCart } = useStateContext();
+  const { decreaseQty, increaseQty, qty, onAddCart, setShowCart, cartItems } =
+    useStateContext();
+
+  const handleBuyNow = async () => {
+    onAddCart(product, qty);
+    setShowCart(false);
+  };
   return (
     <div>
       <div className="product-detail-container">
@@ -30,6 +38,7 @@ function ProductDetails({ product, products }) {
           <div className="small-images-container">
             {image?.map((item, i) => (
               <img
+                key={i}
                 src={urlFor(item)}
                 alt="your new kicks"
                 className={
@@ -62,9 +71,7 @@ function ProductDetails({ product, products }) {
               <span className="minus" onClick={decreaseQty}>
                 <AiOutlineMinus />
               </span>
-              <span className="num" onClick="">
-                {qty}
-              </span>
+              <span className="num">{qty}</span>
               <span className="plus" onClick={increaseQty}>
                 <AiOutlinePlus />
               </span>
@@ -78,7 +85,7 @@ function ProductDetails({ product, products }) {
             >
               Add to Cart
             </button>
-            <button className="buy-now" onClick="" type="button">
+            <button className="buy-now" onClick={handleBuyNow} type="button">
               Buy Now
             </button>
           </div>

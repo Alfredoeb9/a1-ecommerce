@@ -13,6 +13,7 @@ function HeroBanner({ heroBanner }) {
     largeText2,
     image,
     _id,
+    slug,
   } = heroBanner;
 
   return (
@@ -24,7 +25,7 @@ function HeroBanner({ heroBanner }) {
         <img src={urlFor(image)} alt="kicks" className="hero-banner-image" />
 
         <div>
-          <Link href={`/product/${product}`}>
+          <Link href={`/product/${slug.current}`}>
             <button type="button">{buttonText}</button>
           </Link>
           <div className="desc">
