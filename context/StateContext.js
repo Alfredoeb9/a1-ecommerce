@@ -15,6 +15,8 @@ export const StateContext = ({ children }) => {
   let foundProduct;
   let index;
 
+  console.log(foundProduct);
+
   const onAddCart = (product, quantity) => {
     const checkProductInCart = cartItems.find(
       (item) => item._id === product._id
@@ -42,23 +44,34 @@ export const StateContext = ({ children }) => {
     toast.success(`${qty} ${product.name} added to the cart.`);
   };
 
-  const toggleCartItemQuantity = (id, value) => {
-    foundProduct = cartItems.find((item) => item._id === id);
-    index = cartItems.findIndex((product) => product._id === id);
+  const onRemove = (product) => {
+    foundProduct = cartItems.find((item) => item._id === product._id);
+
     // using filter to update newCart Items as
     // filter is non-mutative so does not update the state
     // keep all items where param id !== to the old cart item._id
-    // const newCartItems = cartItems.filter((item) => item._id !== id);
+    const newCartItems = cartItems.filter((item) => item._id !== product._id);
+
+    setTotalPrice(
+      (prevTotalPrice) =>
+        prevTotalPrice - foundProduct.price * foundProduct.quantity
+    );
+    setTotalQuantites(
+      (prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity
+    );
+    setCartItems(newCartItems);
+  };
+
+  const toggleCartItemQuantity = (id, value) => {
+    // if the param id getting passed through is the same as the id in the cart
+    // save the data in foundProduct
+    foundProduct = cartItems.find((item) => item._id === id);
+    index = cartItems.findIndex((product) => product._id === id);
 
     const newCartItems = [...cartItems];
 
+    // if we are increasing lets increase the necessary values
     if (value === "inc") {
-      // splice one from index above
-
-      // setCartItems([
-      //   ...newCartItems,
-      //   { ...foundProduct, quantity: foundProduct.quantity + 1 },
-      // ]);
       foundProduct.quantity += 1;
       newCartItems[index] = foundProduct;
       setCartItems(newCartItems);
@@ -67,10 +80,6 @@ export const StateContext = ({ children }) => {
       setTotalQuantites((prevTotalQuantities) => prevTotalQuantities + 1);
     } else if (value === "dec") {
       if (foundProduct.quantity > 1) {
-        // setCartItems([
-        //   ...newCartItems,
-        //   { ...foundProduct, quantity: foundProduct.quantity - 1 },
-        // ]);
         foundProduct.quantity -= 1;
         newCartItems[index] = foundProduct;
         setCartItems(newCartItems);
@@ -104,6 +113,7 @@ export const StateContext = ({ children }) => {
         decreaseQty,
         onAddCart,
         toggleCartItemQuantity,
+        onRemove,
       }}
     >
       {children}
